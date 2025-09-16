@@ -3,7 +3,7 @@ from . import dashboard_bp
 
 @dashboard_bp.route("/dashboard")
 def dashboard():
-    pass
+    return render_template("dashboard.html")
 
 @dashboard_bp.route("/withdraw")
 def withdraw():

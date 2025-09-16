@@ -1,8 +1,10 @@
+from flask import render_template
+
 from . import profile_bp
 
 @profile_bp.route("/profile")
 def profile():
-    pass
+    return render_template("profile.html")
 
 @profile_bp.route("/upload-profile-picture")
 def upload_profile_picture():
@@ -12,6 +14,6 @@ def upload_profile_picture():
 def edit_profile():
     pass
 
-@profile_bp.route("/change-password")
+@profile_bp.route("/change-password", methods=["GET", "POST"])
 def change_password():
-    pass
+    return render_template("change_password.html")

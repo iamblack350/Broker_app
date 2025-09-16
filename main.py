@@ -8,9 +8,9 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object("config.Config")
 
-    app.register_blueprint(dashboard_bp, url_prefix="dashboard")
-    app.register_blueprint(auth_bp, url_prefix="auth")
-    app.register_blueprint(profile_bp, url_prefix="profile")
+    app.register_blueprint(dashboard_bp, url_prefix="/dashboard")
+    app.register_blueprint(auth_bp, url_prefix="/auth")
+    app.register_blueprint(profile_bp, url_prefix="/profile")
     app.register_blueprint(main_bp)
 
     return app

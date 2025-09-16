@@ -1,11 +1,11 @@
 from flask import request, redirect, render_template, jsonify
 from . import auth_bp
 
-@auth_bp.route("/register", method=["GET", "POST"])
+@auth_bp.route("/register", methods=["GET", "POST"])
 def register():
     return render_template("register.html")
 
-@auth_bp.route("/login", method=["GET", "POST"])
+@auth_bp.route("/login", methods=["GET", "POST"])
 def login():
     return render_template("login.html")
 

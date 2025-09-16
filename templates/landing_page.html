@@ -1,29 +1,30 @@
 {% extends "base.html" %}
-
-{% block title %}Welcome - Broker{% endblock %}
+{% block title %}Welcome - Broker App{% endblock %}
 
 {% block content %}
-<section class="text-center py-20 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-lg">
+<!-- Hero Section -->
+<section class="text-center py-20 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-lg shadow-md">
   <h1 class="text-4xl font-bold mb-4">Welcome to Broker App</h1>
-  <p class="text-lg mb-6">Your simple, secure, and reliable way to manage deposits and withdrawals.</p>
-  <a href="{{ url_for('auth.login') }}"
-     class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold shadow hover:bg-gray-100">
-    Get Started
-  </a>
+  <p class="text-lg mb-6">Your simple, secure, and reliable way to manage deposits, withdrawals, and profiles.</p>
+  <div class="flex justify-center gap-4">
+    <a href="{{ url_for('auth.register') }}" class="bg-white text-blue-600 font-semibold px-6 py-3 rounded shadow hover:bg-gray-100">Get Started</a>
+    <a href="{{ url_for('auth.login') }}" class="bg-transparent border border-white px-6 py-3 rounded hover:bg-white hover:text-blue-600">Login</a>
+  </div>
 </section>
 
-<section class="grid md:grid-cols-3 gap-8 mt-12">
-  <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg">
-    <h3 class="text-xl font-bold mb-2">Fast Deposits</h3>
-    <p>Quick and seamless deposit methods with instant balance updates.</p>
+<!-- Features Section -->
+<section class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+  <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+    <h3 class="text-xl font-semibold mb-2 text-blue-600">Fast Deposits</h3>
+    <p class="text-gray-600">Quickly fund your account and start trading without delays.</p>
   </div>
-  <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg">
-    <h3 class="text-xl font-bold mb-2">Easy Withdrawals</h3>
-    <p>Withdraw funds anytime securely, straight to your account.</p>
+  <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+    <h3 class="text-xl font-semibold mb-2 text-blue-600">Easy Withdrawals</h3>
+    <p class="text-gray-600">Withdraw your funds securely anytime with just a few clicks.</p>
   </div>
-  <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg">
-    <h3 class="text-xl font-bold mb-2">24/7 Support</h3>
-    <p>Reach out to our support team or contact admin directly via WhatsApp.</p>
+  <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+    <h3 class="text-xl font-semibold mb-2 text-blue-600">Profile Management</h3>
+    <p class="text-gray-600">Update your profile, change passwords, and manage your settings easily.</p>
   </div>
 </section>
 {% endblock %}
