@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}Welcome - Broker{% endblock %}
+
+{% block content %}
+<section class="text-center py-20 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-lg">
+  <h1 class="text-4xl font-bold mb-4">Welcome to Broker App</h1>
+  <p class="text-lg mb-6">Your simple, secure, and reliable way to manage deposits and withdrawals.</p>
+  <a href="{{ url_for('auth.login') }}"
+     class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold shadow hover:bg-gray-100">
+    Get Started
+  </a>
+</section>
+
+<section class="grid md:grid-cols-3 gap-8 mt-12">
+  <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg">
+    <h3 class="text-xl font-bold mb-2">Fast Deposits</h3>
+    <p>Quick and seamless deposit methods with instant balance updates.</p>
+  </div>
+  <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg">
+    <h3 class="text-xl font-bold mb-2">Easy Withdrawals</h3>
+    <p>Withdraw funds anytime securely, straight to your account.</p>
+  </div>
+  <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg">
+    <h3 class="text-xl font-bold mb-2">24/7 Support</h3>
+    <p>Reach out to our support team or contact admin directly via WhatsApp.</p>
+  </div>
+</section>
+{% endblock %}

@@ -1,10 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Broker App{% endblock %}</title>
 
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Favicon (optional) -->
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+
+  {% block head %}{% endblock %}
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md p-4 flex justify-between items-center">
+    <a href="{{ url_for('dashboard.index') }}" class="text-xl font-bold text-blue-600">Broker</a>
+    <ul class="flex gap-4">
+      <li><a href="{{ url_for('dashboard.index') }}" class="hover:text-blue-600">Dashboard</a></li>
+      <li><a href="{{ url_for('profile.index') }}" class="hover:text-blue-600">Profile</a></li>
+      <li><a href="{{ url_for('auth.logout') }}" class="hover:text-red-500">Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container mx-auto p-6">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-200 text-center py-4 mt-10">
+    <p class="text-sm text-gray-600">© {{ 2025 }} Broker App. All rights reserved.</p>
+  </footer>
+
+  {% block scripts %}{% endblock %}
 </body>
 </html>

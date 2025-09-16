@@ -13,3 +13,10 @@ def withdraw():
 def deposit():
     pass
 
+@dashboard_bp.route("/transactions")
+def transactions():
+    pass
+
+@dashboard_bp.route("message-admin")
+def message_admin():
+    pass

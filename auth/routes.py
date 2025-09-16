@@ -1,13 +1,13 @@
 from flask import request, redirect, render_template, jsonify
 from . import auth_bp
 
-@auth_bp.route("/register")
+@auth_bp.route("/register", method=["GET", "POST"])
 def register():
-    pass
+    return render_template("register.html")
 
-@auth_bp.route("/login")
+@auth_bp.route("/login", method=["GET", "POST"])
 def login():
-    pass
+    return render_template("login.html")
 
 @auth_bp.route("/logout")
 def logout():
@@ -15,4 +15,8 @@ def logout():
 
 @auth_bp.route("/forgot-password")
 def forgot_password():
+    pass
+
+@auth_bp.route("/reset-password/<token>")
+def reset_password(token):
     pass

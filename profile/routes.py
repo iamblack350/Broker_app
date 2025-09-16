@@ -11,3 +11,7 @@ def upload_profile_picture():
 @profile_bp.route("/edit-profile")
 def edit_profile():
     pass
+
+@profile_bp.route("/change-password")
+def change_password():
+    pass

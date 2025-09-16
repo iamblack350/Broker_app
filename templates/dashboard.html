@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Broker{% endblock %}
+
+{% block content %}
+<div class="grid md:grid-cols-3 gap-6 mt-8">
+  
+  <!-- Balance Card -->
+  <div class="md:col-span-1 bg-white rounded-xl shadow p-6 text-center">
+    <h2 class="text-lg font-semibold text-gray-700">Account Balance</h2>
+    <p class="text-3xl font-bold text-green-600 mt-4">$1,250.00</p>
+    <div class="flex justify-center gap-4 mt-6">
+      <a href="{{ url_for('dashboard.deposit') }}"
+         class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+        Deposit
+      </a>
+      <a href="{{ url_for('dashboard.withdraw') }}"
+         class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+        Withdraw
+      </a>
+    </div>
+  </div>
+
+  <!-- Transactions List -->
+  <div class="md:col-span-2 bg-white rounded-xl shadow p-6">
+    <h2 class="text-lg font-semibold text-gray-700 mb-4">Recent Transactions</h2>
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="text-sm text-gray-500 border-b">
+          <th class="py-2">Date</th>
+          <th class="py-2">Type</th>
+          <th class="py-2">Amount</th>
+          <th class="py-2">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Example Rows -->
+        <tr class="border-b">
+          <td class="py-2">2025-09-12</td>
+          <td class="py-2 text-green-600">Deposit</td>
+          <td class="py-2">$500</td>
+          <td class="py-2"><span class="text-green-600 font-medium">Completed</span></td>
+        </tr>
+        <tr class="border-b">
+          <td class="py-2">2025-09-10</td>
+          <td class="py-2 text-red-600">Withdraw</td>
+          <td class="py-2">$200</td>
+          <td class="py-2"><span class="text-yellow-600 font-medium">Pending</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="mt-4 text-right">
+      <a href="{{ url_for('dashboard.transactions') }}" class="text-blue-600 hover:underline text-sm">
+        View all transactions →
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
