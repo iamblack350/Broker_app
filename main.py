@@ -3,6 +3,7 @@ from dashboard.routes import dashboard_bp
 from auth.routes import auth_bp
 from profile.routes import profile_bp
 from main.routes import main_bp
+from model.database import db
 
 def create_app():
     app = Flask(__name__)
@@ -13,9 +14,12 @@ def create_app():
     app.register_blueprint(profile_bp, url_prefix="/profile")
     app.register_blueprint(main_bp)
 
+    db.init_app(app)
+
+
     return app
 
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(host = "0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)

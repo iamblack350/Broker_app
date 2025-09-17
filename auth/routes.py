@@ -3,6 +3,12 @@ from . import auth_bp
 
 @auth_bp.route("/register", methods=["GET", "POST"])
 def register():
+    if request.method == "POST":
+        firstname = request.form.get("firstname", "").strip()
+        lastname = request.form.get("lastname", "").strip()
+        email = request.form.get("email", "").strip()
+        phone = request.form.get("phone", "").strip()
+        password = request.form.get("email", "").strip()
     return render_template("register.html")
 
 @auth_bp.route("/login", methods=["GET", "POST"])
