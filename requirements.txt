@@ -1,0 +1,9 @@
+flask
+flask-sqlalchemy
+sqlalchemy
+flask_login
+flask_migrate
+flask-bcrypt
+bcrypt
+psycopg2
+python-dotenv
