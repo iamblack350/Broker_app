@@ -1,55 +1,179 @@
 {% extends "base.html" %}
-{% block title %}Dashboard - Broker App{% endblock %}
+
+{% block title %}Dashboard - BrokerPro{% endblock %}
 
 {% block content %}
-<h2 class="text-2xl font-bold mb-6">Dashboard</h2>
+<section class="py-8">
+    <div class="container mx-auto px-4">
+        <!-- Welcome Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome back, {{ user.name }}!</h1>
+            <p class="text-gray-600">Here's your trading overview</p>
+        </div>
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-  <!-- Balance Card -->
-  <div class="bg-white shadow rounded-lg p-6 text-center">
-    <h3 class="text-lg text-gray-600 mb-2">Balance</h3>
-    <p class="text-3xl font-bold text-green-600">$1,250.00</p>
-  </div>
+        <!-- Balance Overview -->
+        <div class="grid md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Account Balance</p>
+                        <p class="text-2xl font-bold text-gray-900">${{ "%.2f"|format(user.balance) }}</p>
+                    </div>
+                    <div class="bg-green-100 p-3 rounded-full">
+                        <i class="fas fa-wallet text-green-600 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Portfolio Value</p>
+                        <p class="text-2xl font-bold text-gray-900">${{ "%.2f"|format(user.balance * 1.15) }}</p>
+                    </div>
+                    <div class="bg-blue-100 p-3 rounded-full">
+                        <i class="fas fa-chart-pie text-blue-600 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Today's P&L</p>
+                        <p class="text-2xl font-bold text-green-600">+$247.50</p>
+                    </div>
+                    <div class="bg-green-100 p-3 rounded-full">
+                        <i class="fas fa-arrow-up text-green-600 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Account Status</p>
+                        {% if user.is_verified %}
+                            <p class="text-lg font-semibold text-green-600">Verified</p>
+                        {% else %}
+                            <p class="text-lg font-semibold text-yellow-600">Pending</p>
+                        {% endif %}
+                    </div>
+                    <div class="{% if user.is_verified %}bg-green-100{% else %}bg-yellow-100{% endif %} p-3 rounded-full">
+                        <i class="fas {% if user.is_verified %}fa-check-circle text-green-600{% else %}fa-exclamation-triangle text-yellow-600{% endif %} text-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  <!-- Deposit Button -->
-  <div class="bg-white shadow rounded-lg p-6 text-center">
-    <h3 class="text-lg text-gray-600 mb-2">Deposit</h3>
-    <a href="{{ url_for('dashboard.deposit') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Deposit Now</a>
-  </div>
+        <!-- Quick Actions -->
+        <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+            <h2 class="text-xl font-semibold mb-4">Quick Actions</h2>
+            <div class="grid md:grid-cols-5 gap-4">
+                <a href="{{ url_for('dashboard.deposit') }}" class="flex items-center justify-center bg-secondary hover:bg-accent text-white py-3 px-4 rounded-lg transition-colors">
+                    <i class="fas fa-plus mr-2"></i>Deposit
+                </a>
+                <a href="{{ url_for('dashboard.withdraw') }}" class="flex items-center justify-center bg-red-600 hover:bg-red-700 text-white py-3 px-4 rounded-lg transition-colors">
+                    <i class="fas fa-minus mr-2"></i>Withdraw
+                </a>
+                <a href="{{ url_for('profile.profile') }}" class="flex items-center justify-center bg-primary hover:bg-blue-700 text-white py-3 px-4 rounded-lg transition-colors">
+                    <i class="fas fa-user mr-2"></i>Edit Profile
+                </a>
+                <a href="https://wa.me/1234567890?text=Hi,%20I%20need%20help%20with%20my%20account" target="_blank" class="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg transition-colors">
+                    <i class="fab fa-whatsapp mr-2"></i>Contact Admin
+                </a>
+                {% if not user.is_verified %}
+                <button class="flex items-center justify-center bg-yellow-600 hover:bg-yellow-700 text-white py-3 px-4 rounded-lg transition-colors">
+                    <i class="fas fa-id-card mr-2"></i>Verify Account
+                </button>
+                {% else %}
+                <div class="flex items-center justify-center bg-gray-100 text-gray-500 py-3 px-4 rounded-lg">
+                    <i class="fas fa-check mr-2"></i>Verified
+                </div>
+                {% endif %}
+            </div>
+        </div>
 
-  <!-- Withdraw Button -->
-  <div class="bg-white shadow rounded-lg p-6 text-center">
-    <h3 class="text-lg text-gray-600 mb-2">Withdraw</h3>
-    <a href="{{ url_for('dashboard.withdraw') }}" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Withdraw</a>
-  </div>
-</div>
+        <div class="grid lg:grid-cols-2 gap-8">
+            <!-- Transaction History -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-4">Recent Transactions</h2>
+                {% if transactions %}
+                <div class="space-y-3">
+                    {% for transaction in transactions %}
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div class="flex items-center">
+                            <div class="{% if transaction.transaction_type == 'deposit' %}bg-green-100 text-green-600{% else %}bg-red-100 text-red-600{% endif %} p-2 rounded-full mr-3">
+                                <i class="fas {% if transaction.transaction_type == 'deposit' %}fa-arrow-down{% else %}fa-arrow-up{% endif %}"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">{{ transaction.transaction_type.title() }}</p>
+                                <p class="text-sm text-gray-600">{{ transaction.created_at.strftime('%B %d, %Y') }}</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-semibold {% if transaction.transaction_type == 'deposit' %}text-green-600{% else %}text-red-600{% endif %}">
+                                {% if transaction.transaction_type == 'deposit' %}+{% else %}-{% endif %}${{ "%.2f"|format(transaction.amount) }}
+                            </p>
+                            <p class="text-sm text-gray-600 capitalize">{{ transaction.status }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-gray-600 text-center py-8">No transactions yet</p>
+                {% endif %}
+            </div>
 
-<!-- Transactions Table -->
-<div class="mt-10 bg-white shadow rounded-lg p-6">
-  <h3 class="text-lg font-bold mb-4">Recent Transactions</h3>
-  <table class="w-full text-left border-collapse">
-    <thead>
-      <tr class="border-b text-gray-600">
-        <th class="p-2">Date</th>
-        <th class="p-2">Type</th>
-        <th class="p-2">Amount</th>
-        <th class="p-2">Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="border-b">
-        <td class="p-2">2025-09-16</td>
-        <td class="p-2">Deposit</td>
-        <td class="p-2 text-green-600">+ $500</td>
-        <td class="p-2">Completed</td>
-      </tr>
-      <tr class="border-b">
-        <td class="p-2">2025-09-14</td>
-        <td class="p-2">Withdraw</td>
-        <td class="p-2 text-red-600">- $200</td>
-        <td class="p-2">Pending</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+            <!-- Portfolio Overview -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-4">Portfolio Overview</h2>
+                <div class="mb-4">
+                    <canvas id="portfolioChart" width="400" height="200"></canvas>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">Stocks</span>
+                        <span class="font-semibold">45%</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">Bonds</span>
+                        <span class="font-semibold">30%</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">Cash</span>
+                        <span class="font-semibold">25%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Portfolio Chart
+    const ctx = document.getElementById('portfolioChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Stocks', 'Bonds', 'Cash'],
+            datasets: [{
+                data: [45, 30, 25],
+                backgroundColor: ['#059669', '#1e40af', '#6b7280'],
+                borderWidth: 2,
+                borderColor: '#ffffff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+</script>
 {% endblock %}

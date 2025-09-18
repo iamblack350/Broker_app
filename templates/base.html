@@ -1,32 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}Broker App{% endblock %}</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Professional Broker Platform{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#1e40af',
+                        'secondary': '#059669',
+                        'accent': '#0f766e',
+                        'dark': '#1f2937',
+                        'light': '#f8fafc'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body class="bg-light text-gray-800 font-sans">
+    <nav class="bg-primary text-white shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-chart-line text-2xl text-secondary"></i>
+                    <span class="text-xl font-bold">BrokerPro</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('dashboard.dashboard') }}" class="hover:text-secondary transition-colors">Dashboard</a>
+                        <a href="{{ url_for('profile.profile') }}" class="hover:text-secondary transition-colors">Profile</a>
+                        <a href="{{ url_for('auth.logout') }}" class="bg-red-600 hover:bg-red-700 px-3 py-2 rounded transition-colors">Logout</a>
+                    {% else %}
+                        <a href="{{ url_for('auth.login') }}" class="hover:text-secondary transition-colors">Sign In</a>
+                        <a href="{{ url_for('auth.register') }}" class="bg-secondary hover:bg-accent px-4 py-2 rounded transition-colors">Get Started</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
 
-  <!-- Navbar -->
-  <nav class="bg-white shadow p-4 flex justify-between items-center">
-    <a href="{{ url_for('main.landing_page') }}" class="text-2xl font-bold text-blue-600">Broker</a>
-    <ul class="flex gap-6">
-      <li><a href="{{ url_for('dashboard.dashboard') }}" class="hover:text-blue-600">Dashboard</a></li>
-      <li><a href="{{ url_for('profile.profile') }}" class="hover:text-blue-600">Profile</a></li>
-      <li><a href="{{ url_for('auth.logout') }}" class="hover:text-red-500">Logout</a></li>
-    </ul>
-  </nav>
+    <main>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="container mx-auto px-4 mt-4">
+                    {% for message in messages %}
+                        <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded mb-4" role="alert">
+                            <span class="block sm:inline">{{ message }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
 
-  <!-- Main Content -->
-  <main class="container mx-auto px-6 py-10">
-    {% block content %}{% endblock %}
-  </main>
+        {% block content %}{% endblock %}
+    </main>
 
-  <!-- Footer -->
-  <footer class="bg-gray-100 text-center py-6 mt-10 border-t">
-    <p class="text-gray-500 text-sm">© 2025 Broker App. All rights reserved.</p>
-  </footer>
+    <footer class="bg-dark text-white py-8 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 BrokerPro. All rights reserved.</p>
+        </div>
+    </footer>
 
+    <script>
+        // Add smooth transitions
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('[class*="transition"]');
+            elements.forEach(el => {
+                el.style.transitionDuration = '300ms';
+            });
+        });
+    </script>
 </body>
 </html>

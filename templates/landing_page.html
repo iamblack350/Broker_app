@@ -1,30 +1,116 @@
 {% extends "base.html" %}
-{% block title %}Welcome - Broker App{% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
-<section class="text-center py-20 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-lg shadow-md">
-  <h1 class="text-4xl font-bold mb-4">Welcome to Broker App</h1>
-  <p class="text-lg mb-6">Your simple, secure, and reliable way to manage deposits, withdrawals, and profiles.</p>
-  <div class="flex justify-center gap-4">
-    <a href="{{ url_for('auth.register') }}" class="bg-white text-blue-600 font-semibold px-6 py-3 rounded shadow hover:bg-gray-100">Get Started</a>
-    <a href="{{ url_for('auth.login') }}" class="bg-transparent border border-white px-6 py-3 rounded hover:bg-white hover:text-blue-600">Login</a>
-  </div>
+<section class="bg-gradient-to-r from-primary to-secondary text-white py-20">
+    <div class="container mx-auto px-4 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">Trade with Confidence</h1>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+            Experience professional trading with our cutting-edge platform. Secure, fast, and designed for success.
+        </p>
+        <a href="{{ url_for('auth.register') }}" class="bg-white text-primary px-8 py-4 text-lg font-semibold rounded-lg hover:bg-gray-100 transition-colors inline-block">
+            Get Started Today
+        </a>
+    </div>
 </section>
 
 <!-- Features Section -->
-<section class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-  <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-    <h3 class="text-xl font-semibold mb-2 text-blue-600">Fast Deposits</h3>
-    <p class="text-gray-600">Quickly fund your account and start trading without delays.</p>
-  </div>
-  <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-    <h3 class="text-xl font-semibold mb-2 text-blue-600">Easy Withdrawals</h3>
-    <p class="text-gray-600">Withdraw your funds securely anytime with just a few clicks.</p>
-  </div>
-  <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-    <h3 class="text-xl font-semibold mb-2 text-blue-600">Profile Management</h3>
-    <p class="text-gray-600">Update your profile, change passwords, and manage your settings easily.</p>
-  </div>
+<section class="py-20">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">Why Choose BrokerPro?</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="text-center p-8 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+                <div class="bg-secondary text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-shield-alt text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-4">Secure Trading</h3>
+                <p class="text-gray-600">Bank-level security with advanced encryption to keep your investments safe and secure.</p>
+            </div>
+            <div class="text-center p-8 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+                <div class="bg-secondary text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-chart-line text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-4">Advanced Analytics</h3>
+                <p class="text-gray-600">Real-time market data and comprehensive analytics to make informed trading decisions.</p>
+            </div>
+            <div class="text-center p-8 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+                <div class="bg-secondary text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-mobile-alt text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-4">Mobile Ready</h3>
+                <p class="text-gray-600">Trade anywhere with our responsive platform that works seamlessly on all devices.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">Choose Your Plan</h2>
+        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <h3 class="text-xl font-semibold mb-4">Basic</h3>
+                <div class="mb-6">
+                    <span class="text-3xl font-bold">$29</span>
+                    <span class="text-gray-600">/month</span>
+                </div>
+                <ul class="space-y-3 mb-8">
+                    <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i> Real-time data</li>
+                    <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i> Basic analytics</li>
+                    <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i> Email support</li>
+                </ul>
+                <a href="{{ url_for('auth.register') }}" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-blue-700 transition-colors block text-center">
+                    Sign Up
+                </a>
+            </div>
+            <div class="bg-white p-8 rounded-lg shadow-lg border-4 border-secondary relative">
+                <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-secondary text-white px-4 py-1 rounded-full text-sm">
+                    Most Popular
+                </div>
+                <h3 class="text-xl font-semibold mb-4">Professional</h3>
+                <div class="mb-6">
+                    <span class="text-3xl font-bold">$99</span>
+                    <span class="text-gray-600">/month</span>
+                </div>
+                <ul class="space-y-3 mb-8">
+                    <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i> Advanced analytics</li>
+                    <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i> Priority support</li>
+                    <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i> Custom indicators</li>
+                </ul>
+                <a href="{{ url_for('auth.register') }}" class="w-full bg-secondary text-white py-3 rounded-lg hover:bg-accent transition-colors block text-center">
+                    Sign Up
+                </a>
+            </div>
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <h3 class="text-xl font-semibold mb-4">Enterprise</h3>
+                <div class="mb-6">
+                    <span class="text-3xl font-bold">$299</span>
+                    <span class="text-gray-600">/month</span>
+                </div>
+                <ul class="space-y-3 mb-8">
+                    <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i> All features</li>
+                    <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i> 24/7 phone support</li>
+                    <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i> API access</li>
+                </ul>
+                <a href="{{ url_for('auth.register') }}" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-blue-700 transition-colors block text-center">
+                    Sign Up
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-primary text-white">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Start Trading?</h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto">
+            Join thousands of successful traders who trust BrokerPro for their trading needs.
+        </p>
+        <a href="{{ url_for('auth.register') }}" class="bg-secondary hover:bg-accent px-8 py-4 text-lg font-semibold rounded-lg transition-colors inline-block">
+            Create Your Account
+        </a>
+    </div>
 </section>
 {% endblock %}
