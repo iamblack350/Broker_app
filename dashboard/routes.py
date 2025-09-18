@@ -7,10 +7,14 @@ from . import dashboard_bp
 @dashboard_bp.route("/dashboard")
 @login_required
 def dashboard():
-    return render_template("dashboard.html")
+    user = {
+        "name" : "iamblack",
+        "balance": 5000
+    }
+    return render_template("dashboard.html", user=user)
 
 @dashboard_bp.route("/withdraw")
-@login_required()
+@login_required
 def withdraw():
     return render_template("withdraw.html")
 
