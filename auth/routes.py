@@ -1,6 +1,9 @@
+from datetime import datetime, timedelta
 from flask import request, redirect, render_template, session, url_for, flash
-from flask_bcrypt import check_password_hash
+from utils.utils import send_reset_email
+import secrets
 from flask_login import login_user, login_required, current_user, logout_user
+from model.models import PasswordReset
 from . import auth_bp
 from . import User
 from . import db
@@ -53,10 +56,60 @@ def logout():
     logout_user()
     return redirect(url_for('auth.login'))
 
-@auth_bp.route("/forgot-password")
+@auth_bp.route("/forgot-password", methods=["GET", "POST"])
 def forgot_password():
+    if request.method == "POST":
+        email = request.form.get("email", "").strip()
+
+        #check if account exist
+        user = User.query.filter_by(email=email).first()
+        if user:
+
+            #Generate random token
+            token = secrets.token_urlsafe(32)
+
+            #store token to PasswordReset table
+            reset_entry = PasswordReset(user_id = user.id,
+                                        token=token,
+                                        expires_at=datetime.utcnow() + timedelta(minutes= 5))
+            db.session.add(reset_entry)
+            db.session.commit()
+
+            #send a verification to email address
+            reset_link = url_for("auth.reset_password", token=token, _external=True)
+            send_reset_email(user, reset_link)
+            flash("We've sent a reset password link to your email")
+            return redirect(url_for("auth.login"))
+        flash("Email not found")
     return render_template("forgot_password.html")
 
-@auth_bp.route("/reset-password/<token>")
+@auth_bp.route("/reset-password/<token>", methods=["GET", "POST"])
 def reset_password(token):
+
+    reset_entry = PasswordReset.query.filter_by(token=token, used=False).first()
+
+    if not reset_entry or reset_entry.expires_at < datetime.utcnow():
+        flash("The reset link is invalid or has expired")
+        return redirect(url_for("auth.forgot_password"))
+    if request.method == "POST":
+        password = request.form.get("password", "").strip()
+        confirm_password = request.form.get("confirm_password", "").strip()
+
+        if password != confirm_password:
+            flash("password do not match!")
+            return redirect(request.url)
+
+        #Update user password
+        user = User.query.get(reset_entry.user_id)
+        password_byte = password.encode("utf-8")
+        hash_password = bcrypt.hashpw(password_byte, bcrypt.gensalt())
+        user.password_hash = hash_password
+        db.session.commit()
+
+        reset_entry.used = True
+        db.session.commit()
+
+        flash("Your password has been reset successfully!")
+        return redirect("auth.login")
+
     return render_template("reset_password.html")

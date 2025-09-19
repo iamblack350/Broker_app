@@ -7,6 +7,7 @@ from auth.routes import auth_bp
 from profile.routes import profile_bp
 from main.routes import main_bp
 from model.database import db
+from utils.extension import mail
 
 migrate = Migrate()
 login_manager = LoginManager()
@@ -25,6 +26,7 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
+    mail.init_app(app)
 
     login_manager.login_view = "auth.login"
 

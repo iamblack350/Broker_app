@@ -1,9 +1,11 @@
 from flask import render_template
+from flask_login import current_user
 from . import profile_bp
 
 @profile_bp.route("/profile")
 def profile():
-    return render_template("profile.html")
+    user = current_user
+    return render_template("profile.html", user=user)
 
 @profile_bp.route("/upload-profile-picture")
 def upload_profile_picture():
