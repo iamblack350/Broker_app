@@ -4,6 +4,7 @@ from decimal import Decimal
 from model.database import db
 from model.models import Withdrawal, Deposit
 from . import dashboard_bp
+from utils.utils import get_transactions
 
 
 @dashboard_bp.route("/dashboard")
@@ -11,7 +12,9 @@ from . import dashboard_bp
 def dashboard():
     user = current_user
     portfolio_value = user.balance * Decimal(1.15)
-    return render_template("dashboard.html",user=user, portfolio_value=portfolio_value)
+    all_transactions = get_transactions(user)
+    return render_template("dashboard.html",user=user,
+                           portfolio_value=portfolio_value, transactions=all_transactions)
 
 @dashboard_bp.route("/withdraw", methods=["GET", "POST"])
 @login_required
@@ -19,20 +22,22 @@ def withdraw():
     if request.method == "POST":
         amount = request.form.get("amount", "").strip()
 
+        if not amount.isdigit():
+            flash("Please enter a valid amount")
+            return redirect(request.url)
+
+        amount = int(amount)
         user = current_user
-        if int(amount) > user.balance:
+        if amount > user.balance:
             flash("Insufficient funds!")
             return redirect(request.url)
 
-        new_balance = user.balance - int(amount)
+        user.balance -= amount
 
         withdrawal = Withdrawal(user_id=user.id,
-                                amount= int(amount))
+                                amount= amount)
         db.session.add(withdrawal)
-        db.commit()
-
-        user.balance = new_balance
-        db.commit()
+        db.session.commit()
     return render_template("withdraw.html")
 
 @dashboard_bp.route("/deposit")
@@ -44,10 +49,8 @@ def deposit():
 @login_required
 def transactions():
     user = current_user
-    withdrawal = Withdrawal.query.filter_by(user_id=current_user.id)
-    deposits = Deposit.query.filter_by(user_id=current_user.id)
-
-    return render_template("transactions.html")
+    all_transactions = get_transactions(user)
+    return render_template("transactions.html", transactions=all_transactions, user=user)
 
 @dashboard_bp.route("/message-admin")
 @login_required

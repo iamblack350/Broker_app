@@ -13,42 +13,52 @@
 
         <!-- Balance Overview -->
         <div class="grid md:grid-cols-4 gap-6 mb-8">
+            <!-- Account Balance -->
             <div class="bg-white p-6 rounded-lg shadow-lg">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-gray-600">Account Balance</p>
-                        <p class="text-2xl font-bold text-gray-900">${{ "%.2f"|format(user.balance) }}</p>
+                        <p class="text-2xl font-bold text-gray-900">
+                            ${{ "{:,.2f}".format(user.balance) }}
+                        </p>
                     </div>
                     <div class="bg-green-100 p-3 rounded-full">
                         <i class="fas fa-wallet text-green-600 text-xl"></i>
                     </div>
                 </div>
             </div>
-            
+
+            <!-- Portfolio Value -->
             <div class="bg-white p-6 rounded-lg shadow-lg">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-gray-600">Portfolio Value</p>
-                        <p class="text-2xl font-bold text-gray-900">${{ "%.2f"|format(portfolio_value) }}</p>
+                        <p class="text-2xl font-bold text-gray-900">
+                            ${{ "{:,.2f}".format(portfolio_value) }}
+                        </p>
                     </div>
                     <div class="bg-blue-100 p-3 rounded-full">
                         <i class="fas fa-chart-pie text-blue-600 text-xl"></i>
                     </div>
                 </div>
             </div>
-            
+
+            <!-- Today's P&L -->
             <div class="bg-white p-6 rounded-lg shadow-lg">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-600">Today's P&L</p>
-                        <p class="text-2xl font-bold text-green-600">+$247.50</p>
+                        <p class="text-sm font-medium text-gray-600">Today's P&amp;L</p>
+                        <p class="text-2xl font-bold text-green-600">
+                            +$247.50
+                        </p>
                     </div>
                     <div class="bg-green-100 p-3 rounded-full">
                         <i class="fas fa-arrow-up text-green-600 text-xl"></i>
                     </div>
                 </div>
             </div>
-            
+
+            <!-- Account Status -->
             <div class="bg-white p-6 rounded-lg shadow-lg">
                 <div class="flex items-center justify-between">
                     <div>
@@ -102,18 +112,23 @@
                 <div class="space-y-3">
                     {% for transaction in transactions %}
                     <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <!-- Icon -->
                         <div class="flex items-center">
                             <div class="{% if transaction.transaction_type == 'deposit' %}bg-green-100 text-green-600{% else %}bg-red-100 text-red-600{% endif %} p-2 rounded-full mr-3">
                                 <i class="fas {% if transaction.transaction_type == 'deposit' %}fa-arrow-down{% else %}fa-arrow-up{% endif %}"></i>
                             </div>
                             <div>
                                 <p class="font-medium">{{ transaction.transaction_type.title() }}</p>
-                                <p class="text-sm text-gray-600">{{ transaction.created_at.strftime('%B %d, %Y') }}</p>
+                                <p class="text-sm text-gray-600">
+                                    {{ transaction.created_at.strftime('%B %d, %Y') }}
+                                </p>
                             </div>
                         </div>
+
+                        <!-- Amount + Status -->
                         <div class="text-right">
                             <p class="font-semibold {% if transaction.transaction_type == 'deposit' %}text-green-600{% else %}text-red-600{% endif %}">
-                                {% if transaction.transaction_type == 'deposit' %}+{% else %}-{% endif %}${{ "%.2f"|format(transaction.amount) }}
+                                {% if transaction.transaction_type == 'deposit' %}+{% else %}-{% endif %}${{ "{:,.2f}".format(transaction.amount) }}
                             </p>
                             <p class="text-sm text-gray-600 capitalize">{{ transaction.status }}</p>
                         </div>
@@ -150,9 +165,9 @@
     </div>
 </section>
 
+<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Portfolio Chart
     const ctx = document.getElementById('portfolioChart').getContext('2d');
     new Chart(ctx, {
         type: 'doughnut',
@@ -169,9 +184,7 @@
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: {
-                    display: false
-                }
+                legend: { display: false }
             }
         }
     });

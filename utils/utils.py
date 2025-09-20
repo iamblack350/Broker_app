@@ -1,8 +1,10 @@
 from flask_mail import Message
 from .extension import mail
 from flask import render_template
+from model.models import Withdrawal, Deposit
+from itertools import chain
+from flask_login import current_user
 from datetime import datetime
-
 
 
 def send_reset_email(user, reset_link):
@@ -21,3 +23,12 @@ def send_reset_email(user, reset_link):
     )
 
     mail.send(msg)
+
+def get_transactions(user):
+    withdrawal = Withdrawal.query.filter_by(user_id=current_user.id).all()
+    deposits = Deposit.query.filter_by(user_id=current_user.id).all()
+
+    all_transactions = list(chain(withdrawal, deposits))
+    all_transactions.sort(key=lambda t: t.created_at, reverse=True)
+
+    return all_transactions

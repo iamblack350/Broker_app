@@ -30,6 +30,10 @@ class Deposit(db.Model, UserMixin):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+    @property
+    def transaction_type(self):
+        return "deposit"
+
 
 class Withdrawal(db.Model, UserMixin):
     __tablename__ = 'withdrawals'
@@ -40,6 +44,10 @@ class Withdrawal(db.Model, UserMixin):
     status = db.Column(db.String(20), default="pending")
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    @property
+    def transaction_type(self):
+        return "withdrawal"
 
 
 class PasswordReset(db.Model, UserMixin):
